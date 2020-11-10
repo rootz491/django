@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ALBUMS</title>
+</head>
+<body>
+    <h1>MUSIC</h1>
+    {% if all_albums %}
+        <ul>
+            {% for album in all_albums %}
+            <li><a href="{% url 'detail' album.id %}">{{ album.album_title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>You don't have any albums yet.</h3>
+    {% endif %}
+</body>
+</html>
