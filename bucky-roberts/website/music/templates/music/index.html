@@ -5,18 +5,119 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
     <title>ALBUMS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+        }
+        body {
+            color: #EEEFFF;
+            background: #333333;
+        }
+        a {
+            color: #EEEFFF;
+        }
+        header {
+            margin: 1em 0;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        #albums {
+            width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+        }
+
+        #albumCard {
+            width: 300px;
+            margin: auto;
+        }
+
+        #albumCard h2 {
+            text-align: center;
+        }
+
+        .albumCover img {
+            width: 300px;
+            height: 300px;
+        }
+
+        #albumCard a::before {
+            content: "𝄞  ";
+            color: white;
+        }
+
+        footer {
+            margin: 2em 0;
+            text-align: center;
+        }
+
+        .myImg img{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+
+        .myImg {
+            margin: auto;
+            width: 200px;
+        }
+
+        @media screen and (max-width: 440px) {
+            #albums {
+                width: 100%;
+            }
+            .albumCover img {
+                width: 250px;
+                height: 250px;
+            }
+            #albumCard {
+                width: 250px;
+                margin: auto;
+            }
+        }
+
+    </style>
+
 </head>
 <body>
-    <h1>MUSIC</h1>
-    {% if all_albums %}
-        <ul>
-            {% for album in all_albums %}
-            <li><a href="{% url 'detail' album.id %}">{{ album.album_title }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h3>You don't have any albums yet.</h3>
-    {% endif %}
+
+    <div class="wrapper">
+        <header>
+            <h1>MUSIC RECORDS</h1>
+        </header>
+
+        <main>
+            <section id="albums">
+
+                {% for album in albums %}
+                <div id="albumCard">
+                    <div class="albumCover">
+                        <img src={{ album.album_logo }} alt="">
+                    </div>
+                    <h2><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></h2>
+                </div>
+                {% endfor %}
+
+            <section>
+        </main>
+        <footer>
+            <div class="myImg">
+                <img src="https://w.wallhaven.cc/full/73/wallhaven-73wjg9.png" alt="my img">
+            </div>
+            <a href="https://karansh491.netlify.app"><b>karansh491</b> @ DEV</a>
+        </footer>
+    </div>
+
 </body>
 </html>
