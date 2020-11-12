@@ -43,6 +43,7 @@
         .albumImg img {
             width: 100%;
             min-height: 250px;
+            border-radius: 10px;
         }
 
         .artist {
@@ -67,6 +68,7 @@
 
         .songHeader {
             font-size: 2.8em;
+            margin-bottom: .3em;
         }
 
         .noSongs {
@@ -75,8 +77,8 @@
             padding: 2em 0;
         }
 
-        footer {
-            margin: 1.5em;
+        form input::submit {
+            margin: 1em 0;
         }
 
         #song {
@@ -85,13 +87,37 @@
             width: 60%
             color: white;
             background: black;
-            cursor: pointer;
             transition: all .2s ease;
+
+            display: flex;
+            gap: 1em;
+            align-items: center;
         }
 
         #song:hover {
             transform: scale(1.01);
+        }
 
+        #song label {
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #fav {
+            width: 30px;
+        }
+
+        #submit {
+            padding: 7px 16px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        footer {
+            margin: 1.5em;
         }
 
         @media screen and (max-width: 800px) {
@@ -111,7 +137,6 @@
                 text-align: center;
                 font-size: 3.5em;
             }
-
         }
 
         @media screen and (max-width: 600px) {
@@ -155,13 +180,28 @@
                     </div>
                 </div>
             </section>
+
             <section id="songs">
                 <h1 class="songHeader">Songs</h1>
                 {% if albumObj.song_set.count != 0 %}
+                <form action="{% url 'music:favourite' albumObj.pk %}", method="post">
+                    {% csrf_token %}
                     {% for song in albumObj.song_set.all %}
-                        <p id="song"> {{ song }}</p>
+                        <div id="song">
+                            <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.pk }}" required>
+                            <label for="song{{ forloop.counter }}">
+                                <p>{{ song }}</p>
+                                {% if song.is_fav %}
+                                    <img id="fav" src="https://img.icons8.com/plasticine/100/000000/star--v1.png"/>
+                                {% endif %}
+                            </label>
+                        </div>
                     {% endfor %}
-
+                    <input id="submit" type="submit" value="favourite">
+                </form>
+                {% if error_message %}
+                    <p><strongn>{{ error_message }}</strongn></p>
+                {% endif %}
                 {% else %}
                     <div class="noSongs">
                         <h1>songs haven't added yet!</h1>
@@ -169,13 +209,14 @@
                     </div>
                 {% endif %}
             </section>
-            <footer>
-                <div class="artistImg">
-                    <img src={{ albumObj.artist_logo }} alt="">
-                </div>
-            </footer>
         </main>
 
+
+<!--        <footer>-->
+<!--            <div class="artistImg">-->
+<!--                <img src={{ albumObj.artist_logo }} alt="">-->
+<!--            </div>-->
+<!--        </footer>-->
     </div>
 
 </body>

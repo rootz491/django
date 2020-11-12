@@ -3,9 +3,11 @@ from .models import Album                       # get data from models (indirect
 # from django.http import HttpResponse          # used it for rendering using METHOD 1
 # from django.template import loader            # to load the templates for METHOD 1
 
+# from django.http import Http404               # Http404 for returning 404 if page not found
+
+from django.http import HttpResponseRedirect
 from django.shortcuts import render             # to render template / send back response. METHOD 2
 from django.shortcuts import get_object_or_404  # shortcut for try catch block.
-from django.http import Http404                 # Http404 for returning 404 if page not found
 
 
 
@@ -67,5 +69,22 @@ def detail(request, album_id):
         # except Album.DoesNotExist:                                                              # if not then
         #         raise Http404("Album not Found! maybe it is deleted or it never existed.")      # raise an HTTP 404 means data not exists.
         album = get_object_or_404(Album, pk=album_id)
-        return render(request, 'music/detail.html', {"albumObj": album})                        # render the page
+        return render(request, 'music/detail.html', {"albumObj": album})                          # render the page
 
+
+
+
+
+def favourite(request, album_id):
+        album = get_object_or_404(Album, pk=album_id)
+        try:
+                selected_song = album.song_set.get(pk=request.POST['song'])
+        except (KeyError, song.doesNotExist):
+                return HttpResponseRedirect('music/detail.html', {
+                        'album': album,
+                        'error_message': 'you did not select a valid song!'
+                })
+        else:
+                selected_song.is_fav = not selected_song.is_fav
+                selected_song.save()
+        return render(request, 'music/detail.html', {"albumObj": album})                        # render the page
