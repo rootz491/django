@@ -80,7 +80,7 @@ def favourite(request, album_id):
         try:
                 selected_song = album.song_set.get(pk=request.POST['song'])
         except (KeyError, song.doesNotExist):
-                return HttpResponseRedirect('music/detail.html', {
+                return render(request, 'music/detail.html', {
                         'album': album,
                         'error_message': 'you did not select a valid song!'
                 })
