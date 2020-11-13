@@ -230,7 +230,13 @@ def index(request, dataId):
 
 ### shortcut: raise 404
 
+return object, if not available in database then returns 404.
 
+```python
+from django.shortcuts import get_object_or_404
+
+data = get_object_or_404(Model, pk=3)
+```
 
 
 
@@ -273,7 +279,7 @@ admin.site.register(Album)      # register album model
 admin.site.register(song)       # register song model
 ```
 
-## Add data to the database
+## access and add data to the database
 
 there are two ways to add data into database:
 
@@ -312,4 +318,184 @@ $ album1.song_set.count()   # return number of songs does this album have
 $ album1.song_set.create(song_title="godzilla", file_type="mp3")
 # here we don't have to explicitly pass the name of album, because it's already in the beginning.
 ```
+
+
+
+
+## writing proper URL (NO HARDCODING PATHS)
+
+so until now we were writing URLs like this:
+
+```html
+<a href='/music/' + {{ object.id }}>visit music file</a>
+```
+
+But in this above reference, half path is hardcoded. and if we later change
+the paths then we'll have to change paths in each file.
+
+now we'll do some changes:
+
+1. urls.py file
+
+```python
+datapattern += [ path(r'<int:id>/', views.function, name=['url-name']) ]
+```
+
+2. HTML template
+
+```html
+<a href="{% url "url-name" object.id %}">visit detailed file</a>
+```
+
+### namespacing
+
+so we use this new URL to make requests, it'll look for URL with url-name in views.py
+But what if we had more than one applications in our app with url-name in their views.py while
+URL mapping. 
+
+to resolve that problem, i introduce you to **namespacing** 
+
+to implement this, follow along:
+
+1. urls.py
+
+```python
+# to identify which application
+app_name = '<app-name>'
+```
+
+2. HTML template
+
+```html
+<a href="{% url "app-name:url-name" object.id %}">visit detailed file</a>
+```
+
+so before writing url name it suppose to visit.
+just add <app-name> to which URL belongs.
+
+
+
+
+## HTML forms
+
+first we will setup HTML template.
+
+```html
+<form action="{% url 'music:favourite' albumObj.pk %}", method="post">
+    {% csrf_token %}
+    {% for song in albumObj.song_set.all %}
+        <div id="song">
+            <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.pk }}" required>
+            <label for="song{{ forloop.counter }}">
+                <p>{{ song }}</p>
+                    {% if song.is_fav %}
+                    <img id="fav" src="https://img.icons8.com/plasticine/100/000000/star--v1.png"/>
+                    {% endif %}
+            </label>
+        </div>
+    {% endfor %}
+    <input id="submit" type="submit" value="favourite">
+</form>
+```
+
+>   here we have to look do work inside form tags.
+>   form's attribute **action** will be **{% url 'music:favourite' albumObj.pk %}**
+>   when we'll submit the form, it will redirect up to this URL.
+
+>   there are different types of inputs inside tag, make sure to add **name** attribute to the input tags.
+>   Because you can only access the inputted data through their name on server side.
+
+let's move to **urls.py**
+
+```python
+urlpatterns += [
+        path(r'album=<int:album_id>/favourite/', views.favourite, name='favourite')
+]
+```
+
+>   here we just added a handling for URL that will be generated after submitting form.
+>   we mapped the request to **favourite method** inside the **views.py** file.
+
+now check out **views.py** method
+
+```python
+def favourite(request, album_id):
+        album = get_object_or_404(Album, pk=album_id)
+        try:
+                selected_song = album.song_set.get(pk=request.POST['song'])
+        except (KeyError, song.doesNotExist):
+                return render(request, 'music/detail.html', {
+                        'album': album,
+                        'error_message': 'you did not select a valid song!'
+                })
+        else:
+                selected_song.is_fav = not selected_song.is_fav
+                selected_song.save()
+        return render(request, 'music/detail.html', {"albumObj": album})
+```
+
+>   this method may seems bit tricky but it's actually easy! Let's see. 
+>   First of all, about **album** variable it's just an optional argument required in that particular example
+>   you can ignore it.
+
+>   in **try** statement, i'm trying to access the song whose id is given if id is invalid. 
+>   then, **except** will come into play. It will send back the response with  with error_message.
+
+>   if everything will go like plan,  then we'll come to **else** block after try block.
+>   here is our main logic, here we will do whatever we want with data. (calculations on server side) and after that
+>   send back the normal response with album object.
+
+
+But
+
+There is a problem with this function response. 
+
+>   the response will go back to same URL and if user reloads or press back button. POST request will be sent 
+>   again. 
+>   We don't want that so we will redirect it to detailed page using a different function.
+
+```python
+# to retrace the URL.
+from django.urls import reverse
+# to redirect response to that page.
+from django.http import HttpResponseRedirect
+# using this function we can do that!
+
+def function(request, id):
+    ...
+    return  HttpResponseRedirect(reverse('<app-name>:<url-name>', args=(id,)))
+```  
+
+in **HttpResponseRedirect** function, first argument will be name of URL to redirect.
+second argument is **args**, in which we'll pass the data to send to new page.
+
+
+## adding static files to templates
+
+To add some static files that are stored on server.
+understand the following steps:
+
+>   first make a directory named **static** inside <app-name> folder.
+>   just like that **template** folder.
+>
+>   now inside that **static** folder, make another folder named same as **<app-name>**
+>   
+>   that's it. now folders are DONE its time to add some static files and images or whatever
+>   you want. You can do that by just making files inside that. 
+
+Now it's time to add those static files with templates.
+go to top of template in which you want to add the static files. 
+and add this code snippets there:
+
+```html
+{% load static %}
+<!-- example: to add style.css file to the template -->
+<link rel="stylesheet" href="{% static '<app-name>/style.css' %}">
+```
+
+with this little code, you have successfully added you first static file to
+the template.
+
+
+
 

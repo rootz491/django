@@ -5,7 +5,9 @@ from .models import Album                       # get data from models (indirect
 
 # from django.http import Http404               # Http404 for returning 404 if page not found
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect    # to redirect to same URL
+from django.urls import reverse                 # to retrace the URL
+
 from django.shortcuts import render             # to render template / send back response. METHOD 2
 from django.shortcuts import get_object_or_404  # shortcut for try catch block.
 
@@ -87,4 +89,4 @@ def favourite(request, album_id):
         else:
                 selected_song.is_fav = not selected_song.is_fav
                 selected_song.save()
-        return render(request, 'music/detail.html', {"albumObj": album})                        # render the page
+        return HttpResponseRedirect(reverse('music:detail', args=(album_id,)))       # redirect to new page.
