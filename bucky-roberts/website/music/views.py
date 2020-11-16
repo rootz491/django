@@ -3,7 +3,7 @@ from .models import Album                       # get data from models (indirect
 # from django.http import HttpResponse          # used it for rendering using METHOD 1
 # from django.template import loader            # to load the templates for METHOD 1
 
-# from django.http import Http404               # Http404 for returning 404 if page not found
+from django.http import Http404                 # Http404 for returning 404 if page not found
 
 from django.http import HttpResponseRedirect    # to redirect to same URL
 from django.urls import reverse                 # to retrace the URL
