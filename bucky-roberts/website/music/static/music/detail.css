@@ -1,144 +1,132 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+header h1 {
+    font-size: 3em;
+    padding: .2em 0;
+    text-align: center;
+}
 
-        body {
-            color: #EEEFFF;
-            background: #333333;
-        }
+main {
+    padding: .2em 0;
+}
 
-        header h1 {
-            font-size: 3em;
-            padding: .2em 0;
-            text-align: center;
-        }
+main > section {
+    width: 90%;
+    margin: auto;
+}
 
-        main {
-            padding: .2em 0;
-        }
+#about {
+    display: flex;
+}
 
-        main > section {
-            width: 90%;
-            margin: auto;
-        }
+#about > div {
+    width: 50%;
+}
 
-        #about {
-            display: flex;
-        }
+.albumImg {
+    width: 400px;
+    margin: auto;
+}
 
-        #about > div {
-            width: 50%;
-        }
+.albumImg img {
+    width: 100%;
+    min-height: 250px;
+    border-radius: 10px;
+}
 
-        .albumImg {
-            width: 400px;
-            margin: auto;
-        }
+.artist {
+    font-size: 2em;
+    color: black;
+}
 
-        .albumImg img {
-            width: 100%;
-            min-height: 250px;
-            border-radius: 10px;
-        }
+.genre {
+    font-size: 1.3em;
+    color: black;
+}
 
-        .artist {
-            font-size: 2em;
-            color: black;
-        }
+.artistImg {
+    margin: auto;
+    width: 250px
+}
 
-        .genre {
-            font-size: 1.3em;
-            color: black;
-        }
+.artistImg > img {
+    width: 100%;
+    border-radius: 50%;
+}
 
-        .artistImg {
-            margin: auto;
-            width: 250px
-        }
+.songHeader {
+    font-size: 2.8em;
+    margin-bottom: .3em;
+}
 
-        .artistImg > img {
-            width: 100%;
-            border-radius: 50%;
-        }
+.noSongs {
+    color: white;
+    text-align: center;
+    padding: 2em 0;
+}
 
-        .songHeader {
-            font-size: 2.8em;
-            margin-bottom: .3em;
-        }
+form input::submit {
+    margin: 1em 0;
+}
 
-        .noSongs {
-            color: white;
-            text-align: center;
-            padding: 2em 0;
-        }
+#song {
+    padding: 10px 18px;
+    margin-bottom: .3em;
+    width: 60%; 
+    color: white;
+    background: black;
+    transition: all .2s ease;
 
-        form input::submit {
-            margin: 1em 0;
-        }
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
 
-        #song {
-            padding: 10px 18px;
-            margin-bottom: .3em;
-            width: 60%
-            color: white;
-            background: black;
-            transition: all .2s ease;
+#song:hover {
+    transform: scale(1.01);
+}
 
-            display: flex;
-            gap: 1em;
-            align-items: center;
-        }
+#song label {
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        #song:hover {
-            transform: scale(1.01);
-        }
+#fav {
+    width: 30px;
+}
 
-        #song label {
-            width: 100%;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+#submit {
+    padding: 7px 16px;
+    margin: 10px 0;
+    cursor: pointer;
+}
 
-        #fav {
-            width: 30px;
-        }
+footer {
+    margin: 1.5em;
+}
 
-        #submit {
-            padding: 7px 16px;
-            margin: 10px 0;
-            cursor: pointer;
-        }
+@media screen and (max-width: 800px) {
+    #about {
+        display: block;
+    }
+    .albumDetails {
+        padding-bottom: 1.5em;
+    }
+    .albumImg {
+        width: 100%;
+    }
+    #about > div {
+        width: 100%;
+    }
+    .songHeader {
+        text-align: center;
+        font-size: 3.5em;
+    }
+}
 
-        footer {
-            margin: 1.5em;
-        }
-
-        @media screen and (max-width: 800px) {
-            #about {
-                display: block;
-            }
-            .albumDetails {
-                padding-bottom: 1.5em;
-            }
-            .albumImg {
-                width: 100%;
-            }
-            #about > div {
-                width: 100%;
-            }
-            .songHeader {
-                text-align: center;
-                font-size: 3.5em;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .artist {
-                font-size: 1.3em;
-            }
-        }
+@media screen and (max-width: 600px) {
+    .artist {
+        font-size: 1.3em;
+    }
+}

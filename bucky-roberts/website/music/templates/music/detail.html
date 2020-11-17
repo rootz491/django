@@ -1,5 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'music/detail.css' %}">
+<link rel="stylesheet" href="{% static 'music/nav.css' %}">
+<link rel="stylesheet" href="{% static 'music/initial.css' %}">
 
 <!doctype html>
 <html lang="en">
@@ -15,6 +17,22 @@
 <body>
 
     <div id="container">
+
+        <!-- adding nav -->
+
+        <nav>
+            
+            <h1>soundtron <sup>V3</sup></h1>
+            
+            <label id="hamburgerLabel" for="hamburger"><span></span></label>
+            <input type="checkbox" name="hamburger" id="hamburger" hidden>
+            <div id="sideNav">
+                <a href="{% url 'music:index' %}">Albums</a>
+                <a href="#">Music</a>
+                <a href="#">About us</a>
+            </div>
+
+        </nav>
 
         <header>
             <h1>{{ albumObj.album_title }}</h1>

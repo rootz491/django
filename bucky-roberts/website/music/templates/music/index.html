@@ -1,6 +1,3 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'music/index.css' %}">
-
 
 
 
@@ -12,14 +9,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'music/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'music/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'music/initial.css' %}">
+
+
+
     <title>ALBUMS</title>
 </head>
 <body>
 
     <div class="wrapper">
-        <header>
-            <h1>MUSIC RECORDS</h1>
-        </header>
+
+
+        <nav>
+            
+            <h1>soundtron <sup>V3</sup></h1>
+            
+            <label id="hamburgerLabel" for="hamburger"><span></span></label>
+            <input type="checkbox" name="hamburger" id="hamburger" hidden>
+            <div id="sideNav">
+                <a href="{% url 'music:index' %}">Albums</a>
+                <a href="#">Music</a>
+                <a href="#">About us</a>
+            </div>
+
+        </nav>
 
         <main>
             <section id="albums">
