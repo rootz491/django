@@ -1,42 +1,19 @@
+{% extends 'music/base.html' %}
+
+{% block title %}
+    Albums
+{% endblock %}
 
 
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-
+{% block static %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'music/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'music/nav.css' %}">
-    <link rel="stylesheet" href="{% static 'music/initial.css' %}">
+{% endblock %}
 
 
 
-    <title>ALBUMS</title>
-</head>
-<body>
-
+{% block body %}
     <div class="wrapper">
-
-
-        <nav>
-            
-            <h1>soundtron <sup>V3</sup></h1>
-            
-            <label id="hamburgerLabel" for="hamburger"><span></span></label>
-            <input type="checkbox" name="hamburger" id="hamburger" hidden>
-            <div id="sideNav">
-                <a href="{% url 'music:index' %}">Albums</a>
-                <a href="#">Music</a>
-                <a href="#">About us</a>
-            </div>
-
-        </nav>
-
         <main>
             <section id="albums">
 
@@ -58,6 +35,4 @@
             <a href="https://karansh491.netlify.app"><b>karansh491</b> @ DEV</a>
         </footer>
     </div>
-
-</body>
-</html>
+{% endblock %}
