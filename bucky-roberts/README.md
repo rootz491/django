@@ -498,4 +498,86 @@ the template.
 
 
 
+## base template
+
+ok, little story time.
+
+>	i want to use navbar to naviagate through my app. but making a navbar is a hasssle. even so, i did it
+>	anyway but making one nav bar isn't enough. it should be present in each page because its common for whole
+>	application. 
+
+so to create common element we make a BASE TEMPLATE. which can be used as inital template from which we can create other 
+templates. 
+
+### how it works:
+
+	i created a html file called *base.html* and work on it as follows:
+
+	>	create a simple HTML file.
+
+	>	use varaibles called *block* to create space which can be filled later using other templates.
+
+	>	syntax for block:
+
+```html
+{% block block_name %}
+	<code here>
+{% endblock %}
+``` 
+
+	>	once block is added to some point in base template file.
+
+	>	later we can add actual code there from other HTML files.
+
+	>	we can also create multiple blocks.
+		some of common uses are body, title and static.
+
+	>	using *body*, we can add body according to page we want to serve
+
+	>	using *title*, we can add corresponding titles to different pages
+
+	>	using *static*, we can add other static files like css and javascript files.
+
+### add base template to other template
+
+	>	first declare that which template are you using. in other words, add your base template to the file.
+
+```html
+{% extends '<app-name>/base.html' %}
+```
+
+	>	now you have added base templates.
+
+	>	remember we had create those variables called *block* Lets use/fill them.
+
+	>	it's exactly same, just as we had created block 
+		new thing is what we want to add inside it, like the actual code.
+
+```html
+{% block name %}
+<div>
+	hehe code here
+</div>
+{% endblock %}
+```
+	
+	>	just like this we have added the code to the block now when we seve this file.
+
+	>	it will take code from BASE template and fill its blocks by taking the code from block inside
+		this file.
+
+	>	and after that it will render the page for us.
+
+see this way we didn't had to repeat the common code. by creating a base template. Hense _code reusablity_ 
+
+
+
+
+
+
+
+
+
+
+
 
