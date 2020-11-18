@@ -573,7 +573,42 @@ see this way we didn't had to repeat the common code. by creating a base templat
 
 
 
+##  Generic Views
 
+>   until now, we have wrote a log of view functions but truth is,
+>   functions are not the standard way to work with views.
+>   
+>   from now on we will use _generic views_
+>   generic views are actually more easy than it sounds.
+
+
+
+
+### let's start writing generic views
+
+first we have to do little change in *urls.py* file, we will change
+the *URLconf*, it just the middle section of URL pattern with which
+we map the request handlers of views.py file
+
+
+```python
+from django.urls import path
+from . import views
+
+app_name = 'abc'
+urlpatterns = [
+        path('', views.IndexView.as_view(), name='index'),
+        path('<int:pk>', views.DetailView.as_view(), name='detail'),
+        path('<int:some_id>', views.something, name='something'),
+]
+```
+
+>   first thing to notice is that we are no more using parameter names
+>   instead, im matching for *primary key* in the URL.
+>
+>   another thing is, as we will use classes to handle requests. so we are
+>   no more using 
+    
 
 
 
