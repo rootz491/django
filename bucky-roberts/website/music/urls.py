@@ -18,4 +18,5 @@ urlpatterns = [
         path(r'', views.IndexView.as_view(), name='index'),
         path(r'album=<int:pk>/', views.DetailView.as_view(), name='detail'),
         path(r'album=<int:album_id>/favourite/', views.favourite, name='favourite'),
+        path(r'album/add/', views.AlbumCreate.as_view(), name='album-add')
 ]

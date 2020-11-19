@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -10,6 +11,10 @@ class Album(models.Model):
         album_title = models.CharField(max_length=300)
         genre = models.CharField(max_length=100)
         album_logo = models.URLField(max_length=1000, default="https://images.unsplash.com/photo-1559713044-c7329e177eb0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80")
+
+        # whenever we create a new album, it will redirect to this URL.
+        def get_absolute_url(self):
+                return reverse('music:detail', kwargs={'pk': self.pk})
 
         def __str__(self):
                 return self.album_title + ' - ' + self.artist

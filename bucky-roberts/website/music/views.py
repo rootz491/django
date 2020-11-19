@@ -1,8 +1,11 @@
-from django.shortcuts import get_object_or_404 ,render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Album, song
+
+
 
 
 class IndexView(generic.ListView):
@@ -19,6 +22,15 @@ class DetailView(generic.DetailView):
         template_name = 'music/detail.html'
         context_object_name = 'albumObj'
 
+
+class AlbumCreate(CreateView):
+        model = Album
+        template_name = 'music/album_form.html'
+        fields = ['artist', 'album_title', 'genre', 'album_logo', 'artist_logo']
+
+
+
+
 def favourite(request, album_id):
         album = get_object_or_404(Album, pk=album_id)
         try:
@@ -31,4 +43,4 @@ def favourite(request, album_id):
         else:
                 selected_song.is_fav = not selected_song.is_fav
                 selected_song.save()
-        return HttpResponseRedirect(reverse('music:detail', args=(album_id,)))       # redirect to new page.
+        return HttpResponseRedirect(reverse('music:detail', args=(album_id,)))       # redirect to same page.

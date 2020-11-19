@@ -1,0 +1,27 @@
+{% extends 'music/base.html' %}
+
+
+{% block title %}
+    Add album
+{% endblock %}
+
+
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'music/form-template.css' %}">
+{% endblock %}
+
+
+{% block body %}
+    <div class="formWrapper">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'music/form-template.html' %}
+
+            <div id="submitBtn">
+                <button type="submit">submit</button>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

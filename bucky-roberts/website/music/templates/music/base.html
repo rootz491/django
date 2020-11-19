@@ -9,7 +9,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'music/nav.css' %}">
-    <link rel="stylesheet" href="{% static 'music/initial.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'music/initial.css' %}">
 
     <title> {% block title %} soundtron {% endblock %} </title>
 
@@ -27,7 +27,8 @@
         <input type="checkbox" name="hamburger" id="hamburger" hidden>
         <div id="sideNav">
             <a href="{% url 'music:index' %}">Albums</a>
-            <a href="#">Music</a>
+            <a href="{% url 'music:album-add' %}">Add album</a>
+            <a href="#">admin</a>
             <a href="#">About us</a>
         </div>
     </nav>
