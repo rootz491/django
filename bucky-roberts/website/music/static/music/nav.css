@@ -59,7 +59,7 @@ nav {
 
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     nav {
         flex-direction: row-reverse; 
         margin-bottom: 2em;       

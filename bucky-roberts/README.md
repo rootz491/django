@@ -607,12 +607,80 @@ urlpatterns = [
 >   instead, im matching for *primary key* in the URL.
 >
 >   another thing is, as we will use classes to handle requests. so we are
->   no more using 
+>   no more using those functions for tasks like sending list of objects or 
+>   detailed object.
+
+*urls.py* part is done. Let's move to *views.py*
+
+>   first thing we can do is to delete all old code that from views.
+>   after that let's write some code that handles first request, that is
+>   index.html request!
+
+```python
+from django.views import generic
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from .models import one, two 
+# these are all the things we will need in order to create our now views.py file.
+
+class IndexView(generic.ListView):
+    template_name = 'app_name/index.html'
+    # template_name is use to locate and serve the template.        
+    context_object_name = 'data'
+    # object_context_name is the name of variable that we'll use in  our template.
     
+    # get_queryset is a function in which we fetch the data from model.
+    def get_queryset(self):
+        # return all object that model 'one' have.
+        return one.objects.all()
+```
 
+so request handling is easy now, atleast when we have to serve pages!
 
+But still if we need to perform some functionality, then we'll again 
+have to use functions instead.
+same goes when we handle form submissions.
 
+>   let's handle request to a page which shows detailed info. about particular object from model
 
+```python
+from django.views import generic
+# imports will remain same!
+class DetailView(generic.DetailView):
+    template_name = 'app_name/detail.html'
+    model = 'one'
+    context_object_name = 'detailed_data'
+```
 
+That's it! we don't even need to fetch data from model ourselves.
+as we define _model = one_, python will go to database and look for table named 'one'
+after that, as we have provided the primary key in urlpatterns in *urls.py*
+so python will take the primary key from there and fetch the corresponding row or whatever.
 
+>   that's all we need to know about generic view.
 
+but for revision, one last time im going to write a function which handles the request for 
+marking a song as favourite. Basically form submission handling.
+
+```python
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from .models import Albums, song
+
+def favourite(request, album_id):
+    album = get_object_or_404(Albums, pk=album_id)
+    try:
+        song = album.song_set.get(request.POST['name'])
+    except (KeyError, song.doesNotExist):
+        return HttpResponseRedirect(reverse('music:detail', args=({
+                'album': album,
+                'error_message': 'song does not exists',
+        })))
+    else:
+        song.is_fav = True
+    return HttpResponseRedirect(reverse('music:detail', args=(album,)))
+```
+
+so as you can see, if we get a request and want to perform some action or calculation instead of 
+serving the page, then we need to write functions as usual.

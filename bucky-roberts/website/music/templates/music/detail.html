@@ -27,6 +27,10 @@
                     <div class="genre">
                         <p>{{ albumObj.genre }}</p>
                     </div>
+                    <div class="bottomBtn">
+                        <a href="{% url 'music:album-update' albumObj.id %}">update</a>
+                        <a href="{% url 'music:album-delete' albumObj.id %}">delete</a>
+                    </div>
                 </div>
                 <div class="albumCover">
                     <div class="albumImg">

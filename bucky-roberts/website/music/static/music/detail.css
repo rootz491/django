@@ -21,6 +21,10 @@ main > section {
     width: 50%;
 }
 
+.albumDetails {
+    position: relative;
+}
+
 .albumImg {
     width: 400px;
     margin: auto;
@@ -61,6 +65,28 @@ main > section {
     color: white;
     text-align: center;
     padding: 2em 0;
+}
+
+.bottomBtn {
+    display: flex;
+    justify-content: right;
+    gap: 2em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
+.bottomBtn a {
+    color: #333333;
+    background: whitesmoke;
+    padding: 8px 20px;
+}
+
+.bottomBtn a:hover {
+    color: black;
+    font-weight: 500;
+    background: whitesmoke;
+    padding: 8px 20px;
 }
 
 form input::submit {
@@ -136,6 +162,13 @@ footer {
     .artistImg {
         width: 60%;
         margin: auto;
+    }
+    .bottomBtn {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 2em;
+        position: static;
+        margin-top: 2em;
     }
 }
 
