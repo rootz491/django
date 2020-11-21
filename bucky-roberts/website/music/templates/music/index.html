@@ -15,18 +15,23 @@
 {% block body %}
     <div class="wrapper">
         <main>
+            {% if albums %}
             <section id="albums">
-
-                {% for album in albums %}
-                <div id="albumCard">
-                    <div class="albumCover">
-                        <img src={{ album.album_logo }} alt="">
+                    {% for album in albums %}
+                    <div id="albumCard">
+                        <div class="albumCover">
+                            <img src={{ album.album_logo.url }} alt="Album Logo">
+                        </div>
+                        <h2><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></h2>
                     </div>
-                    <h2><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></h2>
-                </div>
-                {% endfor %}
-
+                    {% endfor %}
             <section>
+            {% else %}
+                <div class="noAlbums">
+                    <h1>You haven't created any albums yet!</h1>
+                    <p>Let's create one now <a href="{% url 'music:album-create' %}">create album</a></p>
+                </div>
+            {% endif %}
         </main>
         <footer>
             <div class="myImg">

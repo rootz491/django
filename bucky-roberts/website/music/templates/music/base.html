@@ -13,8 +13,16 @@
 
     <title> {% block title %} soundtron {% endblock %} </title>
 
+<!--    block to add css    -->
+    <style>
+    {% block css %}
+    {% endblock %}
+    </style>
+
+<!--    block to add static files to the block  -->
     {% block static %}
     {% endblock %}
+
 </head>
 <body>
     <!-- nav bar -->
@@ -27,12 +35,13 @@
         <input type="checkbox" name="hamburger" id="hamburger" hidden>
         <div id="sideNav">
             <a href="{% url 'music:index' %}">albums</a>
-            <a href="{% url 'music:album-add' %}">add album</a>
+            <a href="{% url 'music:album-create' %}">add album</a>
             <a href="#">admin</a>
             <a href="#">About us</a>
         </div>
     </nav>
-    
+
+<!--    body block    -->
     {% block body %}
     {% endblock %}
 </body>

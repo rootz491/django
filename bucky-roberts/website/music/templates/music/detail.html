@@ -34,44 +34,36 @@
                 </div>
                 <div class="albumCover">
                     <div class="albumImg">
-                        <img src={{ albumObj.album_logo }} alt="Album Logo">
+                        <img src="{{ albumObj.album_logo.url }}" alt="Album Logo">
                     </div>
                 </div>
             </section>
             <section id="songs">
                 <h1 class="songHeader">Songs</h1>
                 {% if albumObj.song_set.count != 0 %}
-                <form action="{% url 'music:favourite' albumObj.pk %}", method="post">
-                    {% csrf_token %}
                     {% for song in albumObj.song_set.all %}
                         <div id="song">
-                            <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.pk }}" required>
-                            <label for="song{{ forloop.counter }}">
-                                <p>{{ song }}</p>
-                                {% if song.is_fav %}
-                                    <img id="fav" src="https://img.icons8.com/plasticine/100/000000/star--v1.png"/>
-                                {% endif %}
-                            </label>
+                            <p>{{ song }}</p>
+                            {% if song.is_fav %}
+                                <img id="fav" src="https://img.icons8.com/plasticine/100/000000/star--v1.png"/>
+                            {% endif %}
                         </div>
                     {% endfor %}
-                    <input id="submit" type="submit" value="favourite">
-                </form>
-                {% if error_message %}
-                    <p><strongn>{{ error_message }}</strongn></p>
-                {% endif %}
                 {% else %}
                     <div class="noSongs">
                         <h1>songs haven't added yet!</h1>
                         <p>please come back later</p>
                     </div>
                 {% endif %}
+                <div class="uploadSong">
+                    <a href="#">upload song</a>
+                </div>
             </section>
         </main>
         <footer>
             <div class="artistImg">
-                <img src={{ albumObj.artist_logo }} alt="">
+                <img src={{ albumObj.artist_logo.url }} alt="artist logo">
             </div>
         </footer>
-    </div>
-
+   </div>
 {% endblock %}

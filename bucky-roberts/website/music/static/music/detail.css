@@ -82,6 +82,17 @@ main > section {
     padding: 8px 20px;
 }
 
+.uploadSong {
+    display: flex;
+}
+
+.uploadSong a {
+    color: #333333;
+    background: whitesmoke;
+    padding: 8px 20px;
+    margin: auto;
+}
+
 .bottomBtn a:hover {
     color: black;
     font-weight: 500;
@@ -101,21 +112,15 @@ form input::submit {
     background: black;
     transition: all .2s ease;
 
-    display: flex;
-    gap: 1em;
-    align-items: center;
-}
-
-#song:hover {
-    transform: scale(1.01);
-}
-
-#song label {
-    width: 100%;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1em;
+}
+
+#song:hover {
+    transform: scale(1.01);
 }
 
 #song p {
@@ -124,12 +129,6 @@ form input::submit {
 
 #fav {
     width: 30px;
-}
-
-#submit {
-    padding: 7px 16px;
-    margin: 10px 0;
-    cursor: pointer;
 }
 
 footer {

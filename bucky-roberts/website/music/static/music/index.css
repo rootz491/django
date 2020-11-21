@@ -33,6 +33,23 @@ footer {
     margin: auto;
     width: 200px;
 }
+.noAlbums {
+    min-height: 40vh;
+    width: 100%;
+    padding: 0 1em;
+    display: grid;
+    place-content: center;
+}
+.noAlbums h1 {
+    margin-bottom: 1em;
+}
+.noAlbums a {
+    color: black;
+    background: white;
+    font-weight: 1000;
+    padding: 6px 10px;
+    margin-left: 4px;
+}
 @media screen and (max-width: 440px) {
     #albums {
         width: 100%;
