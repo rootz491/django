@@ -584,6 +584,8 @@ see this way we didn't had to repeat the common code. by creating a base templat
 
 
 
+
+
 ### let's start writing generic views
 
 first we have to do little change in *urls.py* file, we will change
@@ -603,18 +605,18 @@ urlpatterns = [
 ]
 ```
 
->   first thing to notice is that we are no more using parameter names
->   instead, im matching for *primary key* in the URL.
->
->   another thing is, as we will use classes to handle requests. so we are
->   no more using those functions for tasks like sending list of objects or 
->   detailed object.
+*   first thing to notice is that we are no more using parameter names
+*   instead, im matching for *primary key* in the URL.
+
+*   another thing is, as we will use classes to handle requests. so we are
+*   no more using those functions for tasks like sending list of objects or 
+*   detailed object.
 
 *urls.py* part is done. Let's move to *views.py*
 
->   first thing we can do is to delete all old code that from views.
->   after that let's write some code that handles first request, that is
->   index.html request!
+*   first thing we can do is to delete all old code that from views.
+*   after that let's write some code that handles first request, that is
+*   index.html request!
 
 ```python
 from django.views import generic
@@ -658,6 +660,8 @@ after that, as we have provided the primary key in urlpatterns in *urls.py*
 so python will take the primary key from there and fetch the corresponding row or whatever.
 
 >   that's all we need to know about generic view.
+>
+>   ignore the below part it's just for my practice.
 
 but for revision, one last time im going to write a function which handles the request for 
 marking a song as favourite. Basically form submission handling.
@@ -684,3 +688,112 @@ def favourite(request, album_id):
 
 so as you can see, if we get a request and want to perform some action or calculation instead of 
 serving the page, then we need to write functions as usual.
+
+so to overcome this little problem here comes the *model form*, But we'll talk about it in a little bit.
+
+
+```text
+so far all we have done inside views.py is just serving the index (list) and object (detailed) pages.
+But in a real world application, we don't just do these 2 things but we also do create, update and delete the objects that 
+we were displaying before.  
+```
+
+
+
+## CreateView
+
+Let's start with views.py
+
+```python
+from django.views.generic.edit import CreateView
+from .models import One
+# import CreateView class and 'one' model
+class ObjectCreate(CreateView):
+    model = One
+    # select the model of which the object you want to create.
+    fields = ['name', 'subject', 'etc', 'etc']
+    # choose the field that you wanna take as input from user.
+```
+
+*   here we are just importing CreateView and model of which i wanna create new object/instance.
+*   so the way we can make new instance by user given data is using *model form* 
+*   now this ObjectCreate class will look for HTML form called *one_form.html*
+*   basic thing is HTML form should be named as _modelName_form.html_ 
+*   now server will serve that form and user will fill the form and submit it
+*   and then server will automatically add user data to database.
+
+
+Now we are done with changes in views.py file.
+Let's move on to urls.py file!
+
+>   Here we'll just add the class as a view to map it with URL (request) so it can get served 
+>   when required.
+
+```python
+from .views import ObjectCreate
+urlpatterns += [
+        path(r'objList/add/', ObjectCreate.as_view(), name='object-add')
+]
+```
+
+*   thing to notice here is that we are not getting any primary key or anything from user because
+    the object haven't been created yet.
+*   so when we create a new object it will be assigned a primary key.
+
+>   The one last thing will be, that where we want to redirect once the form gets submitted.
+>
+>   to solve that problem we'll move to models.py and a minor change.
+
+```python
+from django.db import models
+from django.urls import reverse
+
+class One(models.Model):
+    name = models.CharField(max_length=100)
+    
+    def get_absolute_url(self):
+        return reverse('appName:detailedObjectPage', kwargs=({'pk': self.pk}))
+
+    def __str__(self):
+        return sel.name
+```
+
+with this being done, now we know how to get data from user and save it to database.
+
+
+
+
+
+## UpdateView
+
+Basically, UpdateView is same as CreateView.
+The only major difference is instead of getting a empty form to fill.
+user will get a form filled with old values in input tag. And can change 
+the values and resubmit the form to save new values to the database.
+
+>   Let's start with views.py file.
+
+```python
+from django.views.generic import UpdateView
+from .models import One
+
+class ObjectUpdate(UpdateView):
+    model = One
+    fields = ['name', 'etc', 'etc']
+``` 
+
+*   only thing to notice here is that this UpdateView will use same form as CreateView.
+
+>   Next thing to do is to handle the request to update the object's data.
+>   So let's tinker with urls.py
+
+
+```python
+from .views import ObjectUpdate
+
+urlpatterns += [
+        path(r'objList/add/', ObjectUpdate.as_view(), name='object-update')
+]
+```
+
+

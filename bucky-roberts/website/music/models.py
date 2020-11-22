@@ -7,10 +7,10 @@ from django.urls import reverse
 
 class Album(models.Model):
         artist = models.CharField(max_length=50)
-        artist_logo = models.FileField(upload_to='artist_cover')
+        artist_logo = models.ImageField(upload_to='artist_cover')
         album_title = models.CharField(max_length=300)
         genre = models.CharField(max_length=100)
-        album_logo = models.FileField(upload_to='album_cover')
+        album_logo = models.ImageField(upload_to='album_cover')
 
         # whenever we create a new album, it will redirect to this URL.
         def get_absolute_url(self):
