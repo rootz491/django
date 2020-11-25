@@ -83,6 +83,7 @@ main > section {
 }
 
 .uploadSong {
+    margin: 4em;
     display: flex;
 }
 
@@ -112,7 +113,6 @@ form input::submit {
     background: black;
     transition: all .2s ease;
 
-    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -125,6 +125,14 @@ form input::submit {
 
 #song p {
     width: 100%;
+}
+
+.song {
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
 }
 
 #fav {

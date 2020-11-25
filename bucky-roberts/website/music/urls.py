@@ -20,4 +20,8 @@ urlpatterns = [
         path(r'album/add/', views.AlbumCreate.as_view(), name='album-create'),
         path(r'album=<int:pk>/update/', views.AlbumUpdate.as_view(), name='album-update'),
         path(r'album=<int:pk>/delete/', views.AlbumDelete.as_view(), name='album-delete'),
+        path(r'album=<int:album_id>/song/add/', views.SongCreate, name='song-create'),
+        path(r'account/register/', views.UserRegister.as_view(), name='register'),
+        path(r'account/login/', views.UserLogin.as_view(), name='login'),
+        path(r'account/logout/', views.UserLogout.as_view(), name='logout'),
 ]

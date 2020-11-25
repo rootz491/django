@@ -26,18 +26,22 @@
 </head>
 <body>
     <!-- nav bar -->
-    <nav>           
+    <nav>
         <h1>
             <a href="">SoundTron<sup>V3</sup></a>
         </h1>
-        
+
         <label id="hamburgerLabel" for="hamburger"><span></span></label>
         <input type="checkbox" name="hamburger" id="hamburger" hidden>
         <div id="sideNav">
+            {% if user.is_authenticated %}
             <a href="{% url 'music:index' %}">albums</a>
             <a href="{% url 'music:album-create' %}">add album</a>
-            <a href="#">admin</a>
-            <a href="#">About us</a>
+            <a href="{% url 'music:logout' %}">logout</a>
+            {% else %}
+            <a href="{% url 'music:login' %}">login</a>
+            <a href="{% url 'music:register' %}">register</a>
+            {% endif %}
         </div>
     </nav>
 

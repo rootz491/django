@@ -34,6 +34,7 @@ footer {
     width: 200px;
 }
 .noAlbums {
+    display: flex;
     min-height: 40vh;
     width: 100%;
     padding: 0 1em;
@@ -42,6 +43,7 @@ footer {
 }
 .noAlbums h1 {
     margin-bottom: 1em;
+    text-align: center;
 }
 .noAlbums a {
     color: black;
@@ -50,7 +52,15 @@ footer {
     padding: 6px 10px;
     margin-left: 4px;
 }
+.create {
+    display: flex;
+    gap: 10px;
+}
 @media screen and (max-width: 440px) {
+    .create {
+        align-items: center;
+        flex-direction: columns;
+    }
     #albums {
         width: 100%;
     }

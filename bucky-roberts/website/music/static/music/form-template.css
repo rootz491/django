@@ -1,16 +1,4 @@
-.formWrapper {
-    display: grid;
-    place-content: center;
-    height: 100vh;
-    width: 100%;
-}
 
-form {
-    padding: 1em;
-    display: grid;
-    gap: 1em;
-    min-width: 70%;
-}
 
 
 /*   auto generated form-template styling   */
@@ -18,13 +6,14 @@ form {
 #dataField {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 1em;
     width: 100%;
 }
 
 @media screen and (max-width: 600px) {
     #dataField {
-        flex-direction: column;
+        display: block;
     }
 }
 

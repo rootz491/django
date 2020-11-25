@@ -29,13 +29,15 @@
             {% else %}
                 <div class="noAlbums">
                     <h1>You haven't created any albums yet!</h1>
-                    <p>Let's create one now <a href="{% url 'music:album-create' %}">create album</a></p>
+                    <div class="create">
+                        <p>Let's create one now </p><a href="{% url 'music:album-create' %}">create album</a>
+                    </div>
                 </div>
             {% endif %}
         </main>
         <footer>
             <div class="myImg">
-                <img src="https://w.wallhaven.cc/full/73/wallhaven-73wjg9.png" alt="my img">
+                <img src="{% static 'music/img/rootz491.jpg' %}" alt="my img">
             </div>
             <a href="https://karansh491.netlify.app"><b>karansh491</b> @ DEV</a>
         </footer>

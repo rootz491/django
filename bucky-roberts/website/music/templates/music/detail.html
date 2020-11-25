@@ -8,6 +8,9 @@
 {% block static %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'music/detail.css' %}">
+    {% if albumObj.song_set.count != 0 %}
+        <script defer src="{% static 'music/js/play.js' %}"></script>
+    {% endif %}
 {% endblock %}
 
 
@@ -17,6 +20,9 @@
 
         <header>
             <h1>{{ albumObj.album_title }}</h1>
+            {% if User %}
+                <p>{{ User.username }}</p>
+            {% endif %}
         </header>
         <main>
             <section id="about">
@@ -42,11 +48,22 @@
                 <h1 class="songHeader">Songs</h1>
                 {% if albumObj.song_set.count != 0 %}
                     {% for song in albumObj.song_set.all %}
+                        <audio src="{{ song.audio_file.url }}"></audio>
                         <div id="song">
                             <p>{{ song }}</p>
+
                             {% if song.is_fav %}
                                 <img id="fav" src="https://img.icons8.com/plasticine/100/000000/star--v1.png"/>
                             {% endif %}
+
+                            <div class="buttons">
+<!--                                <span id="duration" hidden></span>-->
+                                <input data-path="{{ song.audio_file.url }}" form="btn" class="song" id="btn" type="checkbox" hidden>
+                                <label for="btn">
+                                    <img id="play" src="https://img.icons8.com/fluent/24/000000/play.png"/>
+                                    <img id="pause" src="https://img.icons8.com/fluent/24/000000/pause.png" hidden/>
+                                </label>
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -56,10 +73,15 @@
                     </div>
                 {% endif %}
                 <div class="uploadSong">
-                    <a href="#">upload song</a>
+                    <a href="{% url 'music:song-create' albumObj.id %}">upload song</a>
                 </div>
             </section>
         </main>
+
+        <audio id="player" hidden>
+            <source id="source">
+        </audio>
+
         <footer>
             <div class="artistImg">
                 <img src={{ albumObj.artist_logo.url }} alt="artist logo">
