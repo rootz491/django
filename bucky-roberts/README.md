@@ -612,6 +612,10 @@ urlpatterns = [
 *   no more using those functions for tasks like sending list of objects or 
 *   detailed object.
 
+
+
+## IndexView
+
 *urls.py* part is done. Let's move to *views.py*
 
 *   first thing we can do is to delete all old code that from views.
@@ -642,6 +646,10 @@ so request handling is easy now, atleast when we have to serve pages!
 But still if we need to perform some functionality, then we'll again 
 have to use functions instead.
 same goes when we handle form submissions.
+
+
+
+## DetailView
 
 >   let's handle request to a page which shows detailed info. about particular object from model
 
@@ -750,10 +758,7 @@ from django.urls import reverse
 
 class One(models.Model):
     name = models.CharField(max_length=100)
-    
-    def get_absolute_url(self):
-        return reverse('appName:detailedObjectPage', kwargs=({'pk': self.pk}))
-
+    photo = models.ImageField()
     def __str__(self):
         return sel.name
 ```
@@ -796,4 +801,131 @@ urlpatterns += [
 ]
 ```
 
+>   so now as we are uploading stuff to our database, it good and all.
+>   But it just won't work yet. To make model forms work, visit *<project-name>/settings.py*
+>   file and add this piece of code at the end of it:
 
+```python
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+```
+
+So does it do?
+
+*   _MEDIA_ROOT = BASE_DIR / 'media'_ will make a folder whenever user will upload it's first
+media file.
+
+*   _MEDIA_URL = '/media/'_ will just provide the URL to access that media. 
+
+
+After that being done. go to _<project-name>/urls.py_ and there, add this:
+
+```python
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+the above code says, if we are in DEVELOPERS mode. means we are not in production mode
+only then we'll store our media files to MEDIA_ROOT location.
+
+
+>   Now if i just leave it here, then forms will take the media files and throw it 
+>   into the MEDIA folder present in the root of project folder.
+>
+>   But what we want is to have separate folder for each media like cover_image,
+>   profile image etc...
+>
+>   So to do that, we just go to models.py and add a little change to our existing model.
+
+```python
+# app-name/models.py
+from django.db import models
+from django.urls import reverse
+
+class One(models.Model):
+    name = models.CharField(max_length=100)
+    photo = models.ImageField(upload_to='profile-pic')
+
+    def get_absolute_url(self):
+        return reverse('appName:detailedObjectPage', kwargs=({'pk': self.pk}))
+
+    def __str__(self):
+        return sel.name
+```
+
+By adding *upload_to = 'folderName'* as an argument, 
+Now if we upload a photo then it'll upload to _media/profile-pic_ folder.
+We can do the same for other type of data including audio and video files.
+
+## Form Template
+
+Even if we have configured the settings for model form.
+But still, we haven't created the form yet.
+
+so let's create one:
+
+*   first, create a HTML form file in templates folder of application.
+*   the name of the form should be 'modelName_form.html'
+*   the server will automatically look for this HTML form file, once user
+    request the form.
+
+Let's see what's inside the form:
+
+```html
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {% for field in form %}
+
+        {{ field.label_tag }}
+        {{ field }}
+
+    {% endfor %}
+    
+    <div id="submitBtn">
+        <button type="submit">submit</button>
+    </div>
+
+</form>
+```
+
+*   Form tag should have enctype attribute just like this one, to successfully
+    send data through the form.
+*   Also, add csrf_token to the form so it can be prevented from CSRF attacks.
+*   Now to show each input tag setup we can use for loop, 
+*   _form_ variable contains all the fields that should be taken as input.
+*   we parse through form. and in each iteration, we'll use *field* variable 
+    to work with actual tags.
+*   _field.label_tag_ represents the *label tag* corresponding to the input tag 
+*   _field_ tag itself represents the *input tag*
+*   on submitting this form, POST request will be automatically sent to server
+    and server will store the data into the database according to our views class.
+
+*Now we are completely done creating and updating data and form template.*
+
+
+## DeleteView
+
+now to delete a mode, it's actually pretty simple. just follow along the code:
+
+open _app-name/views.py_ file and create a new generic view class
+
+```python
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+from .models import One
+
+class ObjectDelete(DeleteView):
+    model = One
+    success_url = reverse_lazy('app-name:index')
+```
+
+deletion of data object just takes to things first is,
+
+*   *model* from which we have to delete the data.
+*   *success_url* is the url where we want to redirect once object is deleted.
+    generally we redirect it to index/home page of application.
+
+ 
+ 

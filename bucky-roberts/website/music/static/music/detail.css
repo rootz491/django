@@ -139,6 +139,11 @@ form input::submit {
     width: 30px;
 }
 
+label {
+    display: flex;
+    gap: 5px;
+}
+
 footer {
     margin: 1.5em;
 }

@@ -1,52 +1,52 @@
 console.log('loaded javascript file successfully.')
 
-const source = document.getElementById("source");
-const player = document.getElementById("player");
-//const duration = document.getElementById('duration');
+
+const links = document.querySelectorAll("input.song");
 
 
-const links = document.querySelectorAll("input[class='song']");
+console.log(links);
+
+
 // for-of loop
 // gives us a constant value for each "link" in our list of links:
-links.forEach(link => {
-    // we can then use this link and add an event listener:
-    console.log(link);
-    link.addEventListener("change", setSong);
-});
 
-// 7. change to setSong function name to match above -test/done:
+for (const link of links) {
+    console.log(link);
+    // we can then use this link and add an event listener:
+    link.addEventListener("change", setSong);
+}
+
+
 function setSong(e) {
-    console.log(e.target.checked, e.target);
-    label = e.target.nextElementSibling;
-    const playBtn = label.querySelector('#play');
-    const pauseBtn = label.querySelector('#pause');
+
+    name = e.target.dataset.key;
+    console.log(name)
+
+    sound = document.querySelector(`audio[data-key="${name}"]`)
+    let label =  e.target.nextElementSibling;
+    let playBtn = label.querySelector('#play');
+    let stopBtn = label.querySelector('#stop');
+//    const playBtn = e.target.nextElementSibling.children[0];
+//    const stopBtn = e.target.nextElementSibling.children[1];
+
 
     //  control play/pause btn.
-    if(e.target.checked) {      /* song is playing */
-        playBtn.hidden = true;
-        pauseBtn.hidden = false;
-        //  duration.hidden = false;
+    if(e.target.checked) {
+        console.log('playing', e.target.dataset.key);
+        playBtn.hidden = true;      //  hide
+        stopBtn.hidden = false;     //  un-hide
+
+        sound.play();
     }
+
     else {
-        playBtn.hidden = false;
-        pauseBtn.hidden = true;
-        //  duration.hidden = true;
-        player.play();
+        console.log('paused');
+        playBtn.hidden = false;     //  un-hide
+        stopBtn.hidden = true;      //  hide
+        sound.pause()
+        sound.currentTime = 0;
         return;
     }
 
-    source.url = e.target.dataset.path
 
-    player.load();
-    player.play();
-}
-
-function playAudio() {
-  if (player.readyState) {
-    player.play();
-  }
-}
-
-function pauseAudio() {
-  player.pause();
 }
