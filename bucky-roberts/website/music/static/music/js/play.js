@@ -1,11 +1,10 @@
 console.log('loaded javascript file successfully.')
 
-
-const links = document.querySelectorAll("input.song");
+const audio = document.querySelector('audio');
+const links = document.querySelectorAll(".song");
 
 
 console.log(links);
-
 
 // for-of loop
 // gives us a constant value for each "link" in our list of links:
@@ -13,40 +12,48 @@ console.log(links);
 for (const link of links) {
     console.log(link);
     // we can then use this link and add an event listener:
-    link.addEventListener("change", setSong);
+    link.addEventListener("click", setSong);
 }
 
 
+
 function setSong(e) {
+//    console.log('clicked')
 
-    name = e.target.dataset.key;
-    console.log(name)
+    if(e.target.classList == 'play') {
+        let playBtn = e.target;
 
-    sound = document.querySelector(`audio[data-key="${name}"]`)
-    let label =  e.target.nextElementSibling;
-    let playBtn = label.querySelector('#play');
-    let stopBtn = label.querySelector('#stop');
-//    const playBtn = e.target.nextElementSibling.children[0];
-//    const stopBtn = e.target.nextElementSibling.children[1];
-
-
-    //  control play/pause btn.
-    if(e.target.checked) {
-        console.log('playing', e.target.dataset.key);
-        playBtn.hidden = true;      //  hide
-        stopBtn.hidden = false;     //  un-hide
-
-        sound.play();
+        //  close all buttons
+        closeAllMusic();
+        //  switch to other button
+        song = playBtn.parentElement;
+        let stopBtn = song.querySelector('.stop');
+        stopBtn.hidden = false;
+        playBtn.hidden = true;
+        //  work with audio
+        audio.src = song.dataset.key;
+        audio.load();
+        audio.play();
     }
+    else if(e.target.classList == 'stop') {
+        let stopBtn = e.target;
 
-    else {
-        console.log('paused');
-        playBtn.hidden = false;     //  un-hide
-        stopBtn.hidden = true;      //  hide
-        sound.pause()
-        sound.currentTime = 0;
-        return;
+        //  switch to other button
+        song = stopBtn.parentElement;
+        let playBtn = song.querySelector('.play');
+        playBtn.hidden = false;
+        stopBtn.hidden = true;
+        //  work with audio
+        audio.pause();
     }
+}
 
+
+function closeAllMusic() {
+    allPlay = document.querySelectorAll('.play');
+    allStop = document.querySelectorAll('.stop');
+
+    allPlay.forEach(btn => btn.hidden = false);
+    allStop.forEach(btn => btn.hidden = true);
 
 }

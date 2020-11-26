@@ -105,7 +105,7 @@ form input::submit {
     margin: 1em 0;
 }
 
-#song {
+.song {
     padding: 10px 18px;
     margin-bottom: .3em;
     width: 100%; 
@@ -119,11 +119,11 @@ form input::submit {
     gap: 1em;
 }
 
-#song:hover {
+.song:hover {
     transform: scale(1.01);
 }
 
-#song p {
+.song p {
     width: 100%;
 }
 
