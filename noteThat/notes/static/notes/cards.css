@@ -46,6 +46,7 @@ section {
     background: none;
     border: none;
     outline: none;
+    cursor: pointer;
 }
 
 .front {
