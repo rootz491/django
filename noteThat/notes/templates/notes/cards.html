@@ -1,0 +1,31 @@
+                <div class="cards">
+
+                    <!-- template card -->
+                {% for note in notes %}
+
+                    <div class="card">
+                        <div class="front">
+                            <h1>{{ note.title }}</h1>
+                        </div>
+                        <div class="back">
+                            <h1>{{ note.content }}</h1>
+                        </div>
+                        <div class="bottomBtn">
+                            <a href="{% url 'note:bookmark' note.id %}">
+                                {% if note.is_bookmarked %}
+                                <img src="https://img.icons8.com/material/30/000000/bookmark-ribbon--v1.png"/>
+                                {% else %}
+                                <img src="https://img.icons8.com/material/30/000000/bookmark-outline.png"/>
+                                {% endif %}
+                            </a>
+                            <form action="{% url 'note:delete' note.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit"><img src="https://img.icons8.com/fluent-systems-regular/30/000000/delete-forever.png"/></button>
+                            </form>
+                            <a href="{% url 'note:edit' note.id %}"><img src="https://img.icons8.com/pastel-glyph/30/000000/edit--v2.png"/></a>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                </div>

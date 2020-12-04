@@ -7,8 +7,7 @@ from django.views.generic import View
 from .models import Album, song
 # import for user
 from django.shortcuts import redirect  # it will redirect user whenever user will login.
-from django.contrib.auth import authenticate, \
-        login  # authenticate: take user name and password, login: attaches session ID to user.
+from django.contrib.auth import authenticate, login  # authenticate: take user name and password, login: attaches session ID to user.
 from .forms import RegisterForm, LoginForm, SongForm, AlbumForm  # import Forms from forms.py
 # to check if user is authentic.
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -134,8 +133,8 @@ def SongCreate(request, album_id):
 
                 # after all checks, saving the form.
                 new_song.save()
-                # return render(request, 'music/detail.html', {'albumObj': album})
-                return HttpResponseRedirect(reverse('music:detail', args=({'albumObj': album})))
+                return render(request, 'music/detail.html', {'albumObj': album})
+                # return HttpResponseRedirect(reverse('music:detail', args=({'albumObj': album})))
 
         context = {
                 'album': album,
@@ -173,8 +172,7 @@ class UserRegister(View):
                         username = form.cleaned_data['username']
                         password = form.cleaned_data['password']
                         # to change the password
-                        user.set_password(
-                                password)  # we use this function coz the password will be hashed and not the plain text.
+                        user.set_password(password)  # we use this function coz the password will be hashed and not the plain text.
                         user.save()
                         # at this point, user data is stored into database.
 

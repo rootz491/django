@@ -1,0 +1,27 @@
+{% extends 'notes/template.html' %}
+
+    <!-- static files -->
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/landing.css' %}">
+{% endblock %}
+
+{% block title %}
+    welcome
+{% endblock %}
+
+
+{% block heading %}
+    <h1>One place for all your important Notes and stuff.</h1>
+{% endblock %}
+
+
+
+{% block body %}
+
+            <section id="buttons">
+                <a href="{% url 'note:register' %}">Register</a>
+                <a href="{% url 'note:login' %}">login</a>
+            </section>
+
+{% endblock %}

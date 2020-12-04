@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Lobster & Poppins -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <!-- static files -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'notes/initial.css' %}">
+
+    {% block static %}
+    {% endblock %}
+
+    <title>
+        {% block title %}
+        NoteThat
+        {% endblock %}
+    </title>
+</head>
+<body>
+
+    <div class="wrapper">
+        {% if user.is_authenticated %}
+        <label for="hamburger" id="hamburgerLabel">
+            <span></span>
+        </label>
+        <input type="checkbox" name="hamburger" id="hamburger" >
+
+        <div class="sideBar">
+            <nav>
+                <h1>NOTES</h1>
+
+                <div><a href="{% url 'note:index' %}">View</a></div>
+                <div><a href="{% url 'note:search' %}">Search</a></div>
+                <div><a href="{% url 'note:create' %}">Create</a></div>
+                <div><a href="{% url 'note:bookmarked' %}">bookmarked</a></div>
+
+                <a href="{% url 'note:logout' %}">Logout</a>
+            </nav>
+        </div>
+        {% endif %}
+        <main>
+            <header>
+                <h1>
+                {% block heading %}
+                    NoteThat
+                {% endblock %}
+                </h1>
+            </header>
+            
+            <!-- content -->
+            <section>
+
+                {% block body %}
+                {% endblock %}
+                
+            </section>
+
+            <footer>
+                <p>< code with love  by <a href="https://karansh491.netlify.app">@karansh491</a> /></p>
+            </footer>
+
+        </main>
+
+    </div>
+    
+</body>
+</html>

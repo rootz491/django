@@ -1,0 +1,113 @@
+section {
+    min-height: 100vh;
+}
+
+.cards {
+    width: 90%;
+    min-height: 100vh;
+    margin: auto;
+    margin-bottom: 3em;
+
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 380px));
+    gap: 3em;
+}
+
+
+
+/* particular card */
+
+.card {
+    position: relative;
+    background-color: var(--darkGreen);
+    padding: 1em;
+    overflow: hidden;
+    min-height: 300px;
+    max-height: 350px;
+    border-radius: 10px;
+    border: 1px solid #999999;
+}
+
+
+ 
+.bottomBtn {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+    width: 90%;
+}
+
+.bottomBtn button {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.front {
+    position: absolute;
+    text-align: center;
+    padding: 1em;
+    font-size: 1.4em;
+    width: 90%;
+    height: 80%;
+    z-index: 4;
+    overflow: hidden;
+    color: var(--yellow);
+    background: var(--darkGreen);
+
+    transition: all .8s ease .2s;
+}
+
+
+.card:hover > .front {
+    transform: translateY(-120%);
+    /* opacity: 0; */
+}
+
+.back {
+    position: absolute;
+    text-align: justify;
+    width: 90%;
+    height: 80%;
+    padding: 1em;
+    z-index: 3;
+    overflow-y: scroll;
+    background: var(--darkGreen);
+}
+
+.back::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media  screen and (max-width: 350px) {
+    .cards {
+        margin: 0 auto;
+    }
+    .card {
+        width: auto;
+    }
+}
+
+

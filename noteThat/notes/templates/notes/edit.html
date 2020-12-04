@@ -1,0 +1,34 @@
+{% extends 'notes/template.html' %}
+
+
+
+    <!-- particular style -->
+    {% block static %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'notes/form.css' %}">
+    {% endblock %}
+
+
+
+    {% block title %}
+        Edit Notes
+    {% endblock %}
+
+
+    {% block heading %}
+        Edit Note
+    {% endblock %}
+
+
+        {% block body %}
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input placeholder="Title" id="title" name="title" type="input" value="{{ note.title }}" required>
+                    <textarea placeholder="Note's here" name="content" id="content" cols="40" rows="10" required>{{ note.content }}</textarea>
+                    <div style="display: flex;">
+                        <input id="submit" value="save" type="submit">
+                    </div>
+                </form>
+
+        {% endblock %}

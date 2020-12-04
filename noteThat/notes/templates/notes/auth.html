@@ -1,0 +1,36 @@
+{% extends 'notes/template.html' %}
+
+
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/form.css' %}">
+{% endblock %}
+
+
+{% block title %}
+    {{ todo }}
+{% endblock %}
+
+
+{% block heading %}
+    {{ todo }}
+{% endblock %}
+
+
+{% block body %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="username" name="username">
+            {% if todo == 'Register' %}
+            <input placeholder="Email address" name="email" type="email" required>
+            {% endif %}
+            <input placeholder="password" type="password" name="password" required>
+            <div id="buttons">
+                <button class="button" type="submit">submit</button>
+                {% if todo == 'Login' %}
+                <a class="button" href="{% url 'note:register' %}">want to register?</a>
+                {% endif %}
+            </div>
+        </form>
+        <p style="text-align: center; font-size: 2em; color: red;">{{ error_message }}</p>
+{% endblock %}

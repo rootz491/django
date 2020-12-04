@@ -1,0 +1,19 @@
+{% extends 'notes/template.html' %}
+
+    <!-- personal styling -->
+    {% block static %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'notes/cards.css' %}">
+    {% endblock %}
+
+<!--    title is good as DEFAULT for now    -->
+
+            <!-- content -->
+
+    {% block body %}
+        {% if notes %}
+            {% include 'notes/cards.html' %}
+        {% else %}
+            <h1 style="margin: 3em; text-align: center;">Create some Notes first!</h1>
+        {% endif %}
+    {% endblock %}

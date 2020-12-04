@@ -1,0 +1,26 @@
+{% extends 'notes/template.html' %}
+
+
+<!-- personal styling -->
+    {% block static %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'notes/cards.css' %}">
+    {% endblock %}
+
+
+    {% block title %}
+        Bookmarks
+    {% endblock %}
+
+
+    {% block heading %}
+        Bookmarks
+    {% endblock %}
+
+            <!-- content -->
+
+    {% block body %}
+
+        {% include 'notes/cards.html' %}
+
+    {% endblock %}
